@@ -1,0 +1,17 @@
+## To Do
+    - Routing (started, nowhere near done)
+    - visual design
+    - blog
+    - projects
+        - for each:
+            - link and screen shot
+            - description
+            - what i used
+            - what i learned
+        - include:
+            - This Page
+            - Onus
+            - Colors
+            - Parks
+            - TrueGrid
+    - pens
