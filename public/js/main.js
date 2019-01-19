@@ -1,35 +1,62 @@
-const lastScrollTop = window.pageYOffset || document.documentElement.scrollTop
-const section2 = document.querySelector('#section2');
-const section3 = document.querySelector('#section3');
-const section4 = document.querySelector('#section4');
+const lastScrollTop = window.pageYOffset || document.documentElement.scrollTop,
+hidden = document.querySelectorAll('.hidden'),
+sections = document.querySelectorAll('.section'),
+section2 = document.querySelector('#section2'),
+section3 = document.querySelector('#section3'),
+section4 = document.querySelector('#section4'),
+menuButton = document.querySelector('#menu');
 let scrollTally = 0;
 
 Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
 };
 
+window.addEventListener('DOMContentLoaded', ()=>{
+    setTimeout(function(){
+        hidden.forEach(function(element){
+            element.classList.remove('hidden')
+        })
+    },100)
+})
+
 window.addEventListener('mousewheel', (e)=>{
-    if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ) * 1.5)){
+    if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ))){
         scrollTally += e.deltaY;
     }
-    let sec2pos = (window.innerHeight + 50 + (scrollTally * .5)).clamp(0, window.innerHeight + 50);
-    let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .5)).clamp(0, ((window.innerHeight + 50 ) * 2));
-    let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .5)).clamp(0, ((window.innerHeight + 50 ) * 3));
+
+    sections.forEach(section=>{
+        section.classList.remove('menu')
+    })
+
+    let sec2pos = (window.innerHeight + 50 + (scrollTally * .5)).clamp(50, window.innerHeight + 50);
+    let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 2));
+    let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 3));
     
-    section2.style.setProperty('transform', `translateY(${sec2pos}px)`);
-    section3.style.setProperty('transform', `translateY(${sec3pos}px)`);
-    section4.style.setProperty('transform', `translateY(${sec4pos}px)`);
+    section2.style.setProperty('top', `${sec2pos}px`);
+    section3.style.setProperty('top', `${sec3pos}px`);
+    section4.style.setProperty('top', `${sec4pos}px`);
 })
 
 window.addEventListener('resize', (e)=>{
-    if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ) * 1.5)){
+    if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ))){
         scrollTally += e.deltaY;
     }
-    let sec2pos = (window.innerHeight + 50 + (scrollTally * .5)).clamp(0, window.innerHeight + 50);
-    let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .5)).clamp(0, ((window.innerHeight + 50 ) * 2));
-    let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .5)).clamp(0, ((window.innerHeight + 50 ) * 3));
+
+    sections.forEach(section=>{
+        section.classList.remove('menu')
+    })
+
+    let sec2pos = (window.innerHeight + 50 + (scrollTally * .8)).clamp(50, window.innerHeight + 50);
+    let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .8)).clamp(50, ((window.innerHeight + 50 ) * 2));
+    let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .8)).clamp(50, ((window.innerHeight + 50 ) * 3));
     
-    section2.style.setProperty('transform', `translateY(${sec2pos}px)`);
-    section3.style.setProperty('transform', `translateY(${sec3pos}px)`);
-    section4.style.setProperty('transform', `translateY(${sec4pos}px)`);
+    section2.style.setProperty('top', `${sec2pos}px`);
+    section3.style.setProperty('top', `${sec3pos}px`);
+    section4.style.setProperty('top', `${sec4pos}px`);
+})
+
+menuButton.addEventListener('click', (e)=>{
+    sections.forEach(section=>{
+        section.classList.toggle('menu')
+    })
 })
