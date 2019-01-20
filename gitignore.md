@@ -1,6 +1,8 @@
 ## To Do
     - Routing (started, nowhere near done)
     - visual design
+        - in progress
+        - needs color
     - blog
     - projects
         - for each:
@@ -14,4 +16,5 @@
             - Colors
             - Parks
             - TrueGrid
-    - pens
+        - pens
+    - figure out scrolling overflow, might just be timing.

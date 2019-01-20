@@ -9,7 +9,7 @@
 
 :root{
     --white: #f0f0f0;
-    --grey: #a0a0a0;
+    --grey: #909090;
     --framecolor: #272727;
 }
 
@@ -32,7 +32,7 @@ a{
 .sidebar{
     position: fixed;
     background: var(--framecolor);
-    width: 200px;
+    /* width: 200px; */
     height: calc(100vh - 50px);
     bottom:0;
     z-index: 1001;
@@ -42,6 +42,7 @@ a{
 .navbar{
     position: fixed;
     background: var(--framecolor);
+    color: var(--white);
     height: 50px;
     width: 100vw;
     padding-right: 1rem;
@@ -49,17 +50,22 @@ a{
     z-index: 100;
     transition: all .5s ease-in-out;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.navTitle{
+    transition: all 1s ease-in-out;
 }
 
 .shadow{
     position: fixed;
     top: 50px;
-    left: 200px;
+    left: 0px;
     box-shadow: inset 5px 5px 50px #6667;
     z-index: 100;
-    width: calc(100vw - 200px);
+    width: calc(100vw - 0px);
     height: calc(100vh - 50px);
     pointer-events: none;
     transition: all .5s ease-in-out;
@@ -89,6 +95,11 @@ a{
     transition: all .4s ease-in-out;
 }
 
+p{
+    line-height: 1.5rem;
+    margin: .5rem 0;
+}
+
 .button:hover{
     color: var(--white);
     border: 1px solid var(--white);
@@ -101,16 +112,14 @@ a{
 /* generic section styling */
 .section{
     position: absolute;
-    width: calc(100vw - 200px);
-    height: 100vh;
-    margin-left: 200px;
+    width: calc(100vw - 0px);
+    height: calc(100vh - 50px);
+    margin-left: 0px;
+    padding: 30px 50px;
     box-shadow: -10px 0px 90px #6667;
     background: var(--white);
-    transition: all .4s ease, opacity 1s ease-in-out;
-}
-
-.section:active{
-    transform: translateY(-5vh);
+    overflow: scroll;
+    transition: all .6s ease, opacity 1s ease-in-out;
 }
 
 /* Section 1 */
@@ -130,6 +139,7 @@ a{
 
 .mainHeading{
     height: 125px;
+    margin-bottom: 10px;
 }
 
 .mainHeading .title{
@@ -142,7 +152,8 @@ a{
 }
 
 .heading{
-    height: 75px;
+    margin: 20px;
+    height: 50px;
 }
 
 .heading .subheading{
@@ -155,11 +166,15 @@ a{
     height: 2px;
     border: none;
     border-radius: 2px;
-    background: var(--framecolor);
+    background: var(--grey);
+}
+
+.heading .divider{
+    width: 75%;
 }
 
 #section2{
-    top: 105vh;
+    top: 110vh;
     z-index: 2;
 }
 
@@ -168,7 +183,7 @@ a{
 }
 
 #section3{
-    top: 205vh;
+    top: 215vh;
     z-index: 3;
 }
 
@@ -177,7 +192,7 @@ a{
 }
 
 #section4{
-    top: 305vh;
+    top: 320vh;
     z-index: 4;
 }
 
@@ -185,15 +200,66 @@ a{
     top: calc((100vh - 50px) * .75 + 50px) !important;
 }
 
-.menu{
-    transition: top .4s ease-in-out, transform .4s ease;
-}
-
 .content{
-    padding: 30px 50px;
+    padding: 10px 50px;
+    max-height: calc(100% - 125px);
+    overflow: scroll;
+    display: flex;
+    justify-content: space-between;
 }
 
+.intro, .contentColumn, .profilePic{
+    max-width: 30%;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.contentColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.skills, .goals{
+    width: 100%;
+    max-height: 48%
+}
+
+.skills{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.skills h4{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.skills > svg{
+    margin: 20px;
+    max-height: 50px;
+    max-width: 75px;
+    width: auto;
+    height: auto;
+}
+
+.skills > img{
+    margin: 20px;
+    max-height: 50px;
+    max-width: 75px;
+    height: auto;
+    width: auto;
+}
 /* utility classes */
 .hidden{
     opacity: 0;
+}
+
+.menu{
+    transition: top .8s ease, transform .3s ease;
+}
+
+.menu:hover{
+    transform: translateY(-5vh);
 }

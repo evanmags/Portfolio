@@ -1,9 +1,12 @@
 const lastScrollTop = window.pageYOffset || document.documentElement.scrollTop,
+body = document.querySelector('body'),
 hidden = document.querySelectorAll('.hidden'),
 sections = document.querySelectorAll('.section'),
 section2 = document.querySelector('#section2'),
 section3 = document.querySelector('#section3'),
 section4 = document.querySelector('#section4'),
+navTitle = document.querySelector('.navTitle'),
+content = Array.from(document.querySelectorAll('.content')),
 menuButton = document.querySelector('#menu');
 let scrollTally = 0;
 
@@ -16,25 +19,35 @@ window.addEventListener('DOMContentLoaded', ()=>{
         hidden.forEach(function(element){
             element.classList.remove('hidden')
         })
+        navTitle.classList.add('hidden')
     },100)
 })
 
 window.addEventListener('mousewheel', (e)=>{
-    if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ))){
-        scrollTally += e.deltaY;
-    }
+    // if(!content.includes(e.target)){
+        if((scrollTally + e.deltaY) >= -((window.innerHeight + 50 ) * 6.5) && (scrollTally + e.deltaY) <= ((window.innerHeight + 50 ))){
+            scrollTally += e.deltaY;
+        }
 
-    sections.forEach(section=>{
-        section.classList.remove('menu')
-    })
+        sections.forEach(section=>{
+            section.classList.remove('menu')
+        })
 
-    let sec2pos = (window.innerHeight + 50 + (scrollTally * .5)).clamp(50, window.innerHeight + 50);
-    let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 2));
-    let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 3));
-    
-    section2.style.setProperty('top', `${sec2pos}px`);
-    section3.style.setProperty('top', `${sec3pos}px`);
-    section4.style.setProperty('top', `${sec4pos}px`);
+        let sec2pos = (window.innerHeight + 50 + (scrollTally * .5)).clamp(50, window.innerHeight + 50);
+        let sec3pos = (((window.innerHeight + 50 ) * 2) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 2));
+        let sec4pos = (((window.innerHeight + 50 ) * 3) + (scrollTally * .5)).clamp(50, ((window.innerHeight + 50 ) * 3));
+        
+        if(sec2pos < 100){
+            navTitle.classList.remove('hidden')
+        }
+        if(sec2pos > 100){
+            navTitle.classList.add('hidden')
+        }
+
+        section2.style.setProperty('top', `${sec2pos}px`);
+        section3.style.setProperty('top', `${sec3pos}px`);
+        section4.style.setProperty('top', `${sec4pos}px`);
+    // }
 })
 
 window.addEventListener('resize', (e)=>{
