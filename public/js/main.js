@@ -1,14 +1,16 @@
-const lastScrollTop = window.pageYOffset || document.documentElement.scrollTop,
-body = document.querySelector('body'),
-hidden = document.querySelectorAll('.hidden'),
-sections = document.querySelectorAll('.section'),
-section2 = document.querySelector('#section2'),
-section3 = document.querySelector('#section3'),
-section4 = document.querySelector('#section4'),
-navTitle = document.querySelector('.navTitle'),
-animation = document.querySelector('.animation'),
-content = Array.from(document.querySelectorAll('.content')),
-menuButton = document.querySelector('#menu');
+const   hidden      = document.querySelectorAll('.hidden'),
+        sections    = document.querySelectorAll('.section'),
+        section2    = document.querySelector('#section2'),
+        section3    = document.querySelector('#section3'),
+        section4    = document.querySelector('#section4'),
+        navTitle    = document.querySelector('.navTitle'),
+        animation   = document.querySelector('.animation'),
+        content     = Array.from(document.querySelectorAll('.content')),
+        cards       = document.querySelectorAll('.card'),
+        images      = document.querySelectorAll('.image'),
+        cardcontent = document.querySelectorAll('.cardcontent'),
+        tags        = document.querySelectorAll('.tag'),
+        menuButton  = document.querySelector('#menu');
 
 let scrollTally = 0;
 
@@ -80,10 +82,11 @@ window.addEventListener('resize', (e)=>{
     moveSections(scrollTally)
 })
 
+// scoping issue if this isnt here...
 function moveSections(x){
     let sec2pos = (window.innerHeight + 50 + (x * .6)).clamp(50, window.innerHeight + 50);
     let sec3pos = (((window.innerHeight + 50 ) * 2.2) + (x * .6)).clamp(50, ((window.innerHeight + 50 ) * 2.5));
-    let sec4pos = (((window.innerHeight + 50 ) * 3.8) + (x * .6)).clamp(50, ((window.innerHeight + 50 ) * 4));
+    let sec4pos = (((window.innerHeight + 50 ) * 3.95) + (x * .6)).clamp(50, ((window.innerHeight + 50 ) * 4));
     
     if(sec2pos < 100){
         navTitle.classList.remove('hidden')
@@ -96,3 +99,13 @@ function moveSections(x){
     section3.style.setProperty('top', `${sec3pos}px`);
     section4.style.setProperty('top', `${sec4pos}px`);
 }
+
+cards.forEach(c => 
+  c.addEventListener('click', () =>{ 
+   cards.forEach(card => { 
+     card.classList.toggle('opening');
+     card.classList.toggle('closing');
+   })
+   cards.forEach(card => { card  === c ? c.classList.toggle('displaying') : card.classList.toggle('hidden'); }) 
+ })  
+);
