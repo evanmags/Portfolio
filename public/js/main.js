@@ -18,8 +18,6 @@ Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
 };
 
-
-
 window.addEventListener('DOMContentLoaded', ()=>{
     setTimeout(function(){
         hidden.forEach(function(element){
@@ -27,7 +25,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
         })
         navTitle.classList.add('hidden')
         animation.classList.add('hidden')
-    },100)
+    }, 2000)
 })
 
 

@@ -12,9 +12,6 @@
             - what i learned
         - include:
             - This Page
-            - Onus
-            - Colors
             - Parks
             - TrueGrid
         - pens
-    - figure out scrolling overflow, bug with menu.
