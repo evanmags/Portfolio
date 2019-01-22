@@ -1,17 +1,6 @@
 ## To Do
-    - Routing (started, nowhere near done)
-    - visual design
-        - in progress
-        - needs color
     - blog
     - projects
-        - for each:
-            - link and screen shot
-            - description
-            - what i used
-            - what i learned
         - include:
             - This Page
-            - Parks
-            - TrueGrid
         - pens
