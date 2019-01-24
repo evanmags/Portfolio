@@ -109,6 +109,7 @@ p {
   justify-content: center;
   align-items: center;
   transition: all 0.4s ease-in-out, width 0s;
+  color: var(--grey);
 }
 
 .button a {
@@ -125,6 +126,10 @@ p {
   color: var(--white);
 }
 
+#menu.button i{
+  padding-right: 5px;
+}
+
 /* generic section styling */
 .section {
   position: absolute;
@@ -137,7 +142,7 @@ p {
   box-shadow: -10px 0px 90px #6667;
   background: var(--white);
   /* overflow: hidden; */
-  transition: top .4s ease-in-out, opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out, transform 0.4s ease;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -657,11 +662,10 @@ p {
 }
 
 .notopanimate{
-  transition: top 0s !important;
 }
 
 .menu {
-  transition: transform 0.4s ease;
+  transition: transform 0.4s ease !important;
 }
 
 .menuclick{

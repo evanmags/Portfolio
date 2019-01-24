@@ -41,14 +41,16 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 
 menuButton.addEventListener('click', (e)=>{
+    console.log((200 + ele1Hight) - window.scrollY - (window.innerHeight * .25))
     let lastY = window.scrollY;
     sections.forEach(section=>{
         section.classList.toggle('menu')
     })
     if(sections[2].classList.contains('menu')){
-        section2.style.setProperty('transform', `translateY(-${(200 + ele1Hight) - window.scrollY - (window.innerHeight * .25)}px)`)
-        section3.style.setProperty('transform', `translateY(-${(300 + ele1Hight + ele2Hight) - window.scrollY - (window.innerHeight * .5)}px)`)
-        section4.style.setProperty('transform', `translateY(-${(400 + ele1Hight + ele2Hight + ele3Hight) - window.scrollY - (window.innerHeight * .75)}px)`)
+        
+        section2.style.setProperty('transform', `translateY(${-((200 + ele1Hight) - window.scrollY - (window.innerHeight * .25)).clamp(-(window.innerHeight * .25)+50, 10000)}px)`)
+        section3.style.setProperty('transform', `translateY(${-((300 + ele1Hight + ele2Hight) - window.scrollY - (window.innerHeight * .5)).clamp(-(window.innerHeight * .5)+50, 10000)}px)`)
+        section4.style.setProperty('transform', `translateY(${-((400 + ele1Hight + ele2Hight + ele3Hight) - window.scrollY - (window.innerHeight * .75)).clamp(-(window.innerHeight * .75)+50, 10000)}px)`)
     }
     else{
         section2.style.setProperty('transform', `translateY(0px)`)
@@ -60,20 +62,23 @@ menuButton.addEventListener('click', (e)=>{
 sections.forEach(section => {
     section.addEventListener('click', (e) => {
         if(sections[2].classList.contains('menu')){
+            setTimeout(()=>{
+                section.classList.remove('menuclick');
+                console.log(`removed class from ${section}`)
+                window.scrollTo({
+                    top: ele1Hight + 200,
+                    left: 0,
+                    behavior: 'smooth'
+                });
+            }, 100)
+            section2.style.setProperty('transform', `translateY(0px)`)
+            section3.style.setProperty('transform', `translateY(0px)`)
+            section4.style.setProperty('transform', `translateY(0px)`)
             section.classList.add('menuclick');
             console.log(`added class to ${section}`)
             sections.forEach(section => {
                 section.classList.remove('menu')
             })
-            setTimeout(()=>{
-                section.classList.remove('menuclick');
-                console.log(`removed class from ${section}`)
-                window.scrollTo({
-                    top: 873,
-                    left: 0,
-                    behavior: 'smooth'
-                });
-            }, 120)
         }
     })
 })
@@ -81,14 +86,19 @@ sections.forEach(section => {
     
 
 window.addEventListener('scroll', (e)=>{
+    sections.forEach(section=>{
+        section.classList.remove('menu')
+    })
+    section2.style.setProperty('transform', `translateY(0px)`)
+    section3.style.setProperty('transform', `translateY(0px)`)
+    section4.style.setProperty('transform', `translateY(0px)`)
     //section 1
     if(window.scrollY >= ele1Hight - window.innerHeight + 50){
         let position = (window.scrollY).clamp(-50, (ele1Hight - window.innerHeight))
         sections[0].style.top = `${-position}px`;
-        sections[0].classList.add('fixed', 'notopanimate');
+        sections[0].classList.add('fixed');
     }
     if(window.scrollY <= ele1Hight - window.innerHeight + 50){
-        setTimeout(()=>{sections[0].classList.remove('notopanimate')}, 10)
         sections[0].style.top = `50px`;
         sections[0].classList.remove('fixed')
     }
@@ -101,7 +111,6 @@ window.addEventListener('scroll', (e)=>{
         sections[1].classList.add('fixed', 'notopanimate');
     }
     if(window.scrollY <= (ele1Hight + ele2Hight) - window.innerHeight + 200){
-        setTimeout(()=>{sections[1].classList.remove('notopanimate')}, 10)
         sections[1].style.top = `${ele1Hight +200}px`;
         sections[1].classList.remove('fixed')
     }
@@ -114,7 +123,6 @@ window.addEventListener('scroll', (e)=>{
         sections[2].classList.add('fixed', 'notopanimate');
     }
     if(window.scrollY <= (ele1Hight + ele2Hight + ele3Hight) - window.innerHeight + 300){
-        setTimeout(()=>{sections[2].classList.remove('notopanimate')}, 10)
         sections[2].style.top = `${ele1Hight + ele2Hight + 300}px`;
         sections[2].classList.remove('fixed')
     }
