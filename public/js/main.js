@@ -1,4 +1,5 @@
-const   hidden      = document.querySelectorAll('.hidden'),
+const   body        = document.querySelector('body'),
+        hidden      = document.querySelectorAll('.hidden'),
         sections    = document.querySelectorAll('.section'),
         navTitle    = document.querySelector('.navTitle'),
         animation   = document.querySelector('.animation'),
@@ -7,28 +8,63 @@ const   hidden      = document.querySelectorAll('.hidden'),
         images      = document.querySelectorAll('.image'),
         cardcontent = document.querySelectorAll('.cardcontent'),
         tags        = document.querySelectorAll('.tag'),
-        menuButton  = document.querySelector('#menu'),
-        ele1Hight = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
-        ele2Hight = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
-        ele3Hight = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
-        ele4Hight = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+        menuButton  = document.querySelector('#menu');
+        
 
-let scrollTally = 0;
+let ele1Height = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
+    ele2Height = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
+    ele2offset = ele1Height + 200;
+    ele3Height = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
+    ele3offset = 300 + ele1Height + ele2Height;
+    ele4Height = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+    ele4offset = 400 + ele1Height + ele2Height + ele3Height;
 
 
 Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
 };
 
+window.addEventListener('resize', ()=>{
+    ele1Height = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
+    ele2Height = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
+    ele3Height = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
+    ele4Height = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+
+    initTop()
+})
+
+function menuOff(){
+    section2.style.setProperty('transform', `translateY(0px) rotateX(0deg) `);
+    section3.style.setProperty('transform', `translateY(0px) rotateX(0deg)`);
+    section4.style.setProperty('transform', `translateY(0px) rotateX(0deg)`);
+    sections.forEach(section => {
+        section.classList.remove('menu')
+    })
+}
+
+function initTop(){
+    //set section 2 initial 'top'
+    document.documentElement.style.setProperty('--sec2top', `${ele2offset}px`)
+    //set section 3 initial 'top'
+    document.documentElement.style.setProperty('--sec3top', `${ele3offset}px`)
+    //set section 4 initial 'top'
+    document.documentElement.style.setProperty('--sec4top', `${ele4offset}px`)
+}
+
+function addFix(section, offset){
+    let position = (window.scrollY).clamp(-50, (offset - window.innerHeight))
+    section.style.top = `${-position}px`;
+    section.classList.add('fixed',);
+}
+
+function removeFix(section, offset){
+    section.style.top = `${offset}px`;
+    section.classList.remove('fixed')
+}
 
 window.addEventListener('DOMContentLoaded', ()=>{
     //set starting positions of elements, allows for changes in height on different screen sizes while also allowing the scroll effect
-    //set section 2 initial 'top'
-    document.documentElement.style.setProperty('--sec1height', `${200 + ele1Hight}px`)
-    //set section 3 initial 'top'
-    document.documentElement.style.setProperty('--sec2height', `${300 + ele1Hight + ele2Hight}px`)
-    //set section 4 initial 'top'
-    document.documentElement.style.setProperty('--sec3height', `${400 + ele1Hight + ele2Hight + ele3Hight}px`)
+    initTop()
     setTimeout(function(){
         // loading animation and fade in
         hidden.forEach(function(element){
@@ -41,92 +77,49 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 
 menuButton.addEventListener('click', (e)=>{
-    console.log((200 + ele1Hight) - window.scrollY - (window.innerHeight * .25))
-    let lastY = window.scrollY;
     sections.forEach(section=>{
         section.classList.toggle('menu')
     })
     if(sections[2].classList.contains('menu')){
-        
-        section2.style.setProperty('transform', `translateY(${-((200 + ele1Hight) - window.scrollY - (window.innerHeight * .25)).clamp(-(window.innerHeight * .25)+50, 10000)}px)`)
-        section3.style.setProperty('transform', `translateY(${-((300 + ele1Hight + ele2Hight) - window.scrollY - (window.innerHeight * .5)).clamp(-(window.innerHeight * .5)+50, 10000)}px)`)
-        section4.style.setProperty('transform', `translateY(${-((400 + ele1Hight + ele2Hight + ele3Hight) - window.scrollY - (window.innerHeight * .75)).clamp(-(window.innerHeight * .75)+50, 10000)}px)`)
+        return section2.style.setProperty('transform', `translateY(${-(ele2offset - window.scrollY - (window.innerHeight * .25)).clamp(-(window.innerHeight * .25)+50, ele2offset)}px)`),
+        section3.style.setProperty('transform', `translateY(${-(ele3offset - window.scrollY - (window.innerHeight * .5)).clamp(-(window.innerHeight * .5)+50, ele3offset)}px)`),
+        section4.style.setProperty('transform', `translateY(${-(ele4offset - window.scrollY - (window.innerHeight * .75)).clamp(-(window.innerHeight * .75)+50, ele4offset)}px)`);
     }
-    else{
-        section2.style.setProperty('transform', `translateY(0px)`)
-        section3.style.setProperty('transform', `translateY(0px)`)
-        section4.style.setProperty('transform', `translateY(0px)`)
-    }
+    menuOff()
 })
 
 sections.forEach(section => {
     section.addEventListener('click', (e) => {
+        const target = e.target;
         if(sections[2].classList.contains('menu')){
             setTimeout(()=>{
                 section.classList.remove('menuclick');
                 console.log(`removed class from ${section}`)
-                window.scrollTo({
-                    top: ele1Hight + 200,
-                    left: 0,
+                target.scrollIntoView({
                     behavior: 'smooth'
                 });
             }, 100)
-            section2.style.setProperty('transform', `translateY(0px)`)
-            section3.style.setProperty('transform', `translateY(0px)`)
-            section4.style.setProperty('transform', `translateY(0px)`)
-            section.classList.add('menuclick');
-            console.log(`added class to ${section}`)
-            sections.forEach(section => {
-                section.classList.remove('menu')
-            })
+            menuOff()
         }
     })
 })
 
-    
-
 window.addEventListener('scroll', (e)=>{
-    sections.forEach(section=>{
-        section.classList.remove('menu')
-    })
-    section2.style.setProperty('transform', `translateY(0px)`)
-    section3.style.setProperty('transform', `translateY(0px)`)
-    section4.style.setProperty('transform', `translateY(0px)`)
+    menuOff()
     //section 1
-    if(window.scrollY >= ele1Hight - window.innerHeight + 50){
-        let position = (window.scrollY).clamp(-50, (ele1Hight - window.innerHeight))
-        sections[0].style.top = `${-position}px`;
-        sections[0].classList.add('fixed');
-    }
-    if(window.scrollY <= ele1Hight - window.innerHeight + 50){
-        sections[0].style.top = `50px`;
-        sections[0].classList.remove('fixed')
-    }
-
+    if(window.scrollY >= ele1Height - window.innerHeight + 50)  addFix(sections[0], ele1Height); 
+    else removeFix(sections[0], 50);
 
     //section 2
-    if(window.scrollY >= (ele1Hight + ele2Hight) - window.innerHeight + 200){
-        let position = (window.scrollY).clamp(-50, (ele2Hight - window.innerHeight))
-        sections[1].style.top = `${-position}px`;
-        sections[1].classList.add('fixed', 'notopanimate');
-    }
-    if(window.scrollY <= (ele1Hight + ele2Hight) - window.innerHeight + 200){
-        sections[1].style.top = `${ele1Hight +200}px`;
-        sections[1].classList.remove('fixed')
-    }
-
+    if(window.scrollY >= ele3offset - window.innerHeight - 100) addFix(sections[1], ele2Height);
+    else removeFix(sections[1], ele2offset);
 
     //section 3
-    if(window.scrollY >= (ele1Hight + ele2Hight + ele3Hight) - window.innerHeight + 300){
-        let position = (window.scrollY).clamp(-50, (ele3Hight - window.innerHeight))
-        sections[2].style.top = `${-position}px`;
-        sections[2].classList.add('fixed', 'notopanimate');
-    }
-    if(window.scrollY <= (ele1Hight + ele2Hight + ele3Hight) - window.innerHeight + 300){
-        sections[2].style.top = `${ele1Hight + ele2Hight + 300}px`;
-        sections[2].classList.remove('fixed')
-    }
+    if(window.scrollY >= ele4offset - window.innerHeight - 100) addFix(sections[2], ele3Height); 
+    else removeFix(sections[2], ele3offset);
 })
+
+
 
 cards.forEach(c => 
   c.addEventListener('click', () =>{ 
