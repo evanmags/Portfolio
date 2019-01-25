@@ -139,7 +139,7 @@ p {
   padding: 30px 50px 50px 50px;
   box-shadow: -10px 0px 90px #6667;
   background: var(--white);
-  transition: opacity 1s ease-in-out, transform 0.4s ease;
+  transition: opacity 1s ease-in-out, transform 0.4s ease, background .4s ease;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
