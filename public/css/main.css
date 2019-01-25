@@ -270,6 +270,15 @@ p {
   z-index: 4;
 }
 
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.contactInfo span{
+  opacity: 0;
+}
+
 /* stying for components of each section */
 .heading,
 .mainHeading {
@@ -386,6 +395,11 @@ p {
 .card:nth-of-type(4) {
   background-image: url("/images/TrueGrid.png");
   order:4;
+}
+
+.card:nth-of-type(5) {
+  background-image: url("/images/pixelator.png");
+  order:5;
 }
 
 .card.opening,
@@ -705,6 +719,14 @@ p {
     align-items: flex-start;
     flex-direction: row;
   }
+
+  .skills{
+    margin-right: 35px;
+  }
+  .goals{
+    margin-left: 35px;
+  }
+
   .content,
   #section3 .content {
     width: 100%;
@@ -730,6 +752,13 @@ p {
   #section1 .contentColumn:last-of-type{
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .skills{
+    margin-right: 0px;
+  }
+  .goals{
+    margin-left: 0px;
   }
 
   #section1 .contentColumn:first-of-type{

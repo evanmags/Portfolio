@@ -106,6 +106,7 @@ sections.forEach(section => {
 })
 
 window.addEventListener('scroll', (e)=>{
+    window.scrollY > 200 ? navTitle.classList.remove('hidden') : navTitle.classList.add('hidden') ;
     //section 1
     (window.scrollY >= ele1Height - window.innerHeight + 50) ? addFix(sections[0], ele1Height) : removeFix(sections[0], 50);
     //section 2
