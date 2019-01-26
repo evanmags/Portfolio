@@ -7,7 +7,6 @@ const   body        = document.querySelector('body'),
         cards       = document.querySelectorAll('.card'),
         images      = document.querySelectorAll('.image'),
         cardcontent = document.querySelectorAll('.cardcontent'),
-        tags        = document.querySelectorAll('.tag'),
         menuButton  = document.querySelector('#menu');
         
 
@@ -25,14 +24,22 @@ Number.prototype.clamp = function(min, max) {
     return Math.min(Math.max(this, min), max);
 };
 
-window.addEventListener('resize', ()=>{
-    ele1Height = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
-    ele2Height = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
-    ele3Height = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
-    ele4Height = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+function debounce(func, wait = 10, immediate = true) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  }
 
-    initTop()
-})
+
 
 function menuOff(){
     section2.style.setProperty('transform', `translateY(0px) rotateX(0deg) `);
@@ -62,6 +69,18 @@ function removeFix(section, offset){
     section.classList.remove('fixed')
 }
 
+function sectionFix(){
+    window.scrollY > 200 ? navTitle.classList.remove('hidden') : navTitle.classList.add('hidden') ;
+    //section 1
+    (window.scrollY >= ele1Height - window.innerHeight + 50) ? addFix(sections[0], ele1Height) : removeFix(sections[0], 50);
+    //section 2
+    (window.scrollY >= ele3offset - window.innerHeight - 100) ? addFix(sections[1], ele2Height) : removeFix(sections[1], ele2offset);
+    //section 3
+    (window.scrollY >= ele4offset - window.innerHeight - 100) ? addFix(sections[2], ele3Height) : removeFix(sections[2], ele3offset);
+
+    menuOff()
+}
+
 window.addEventListener('DOMContentLoaded', ()=>{
     //set starting positions of elements, allows for changes in height on different screen sizes while also allowing the scroll effect
     setTimeout(function(){
@@ -74,6 +93,18 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }, 2000)
 })
 
+window.addEventListener('resize', ()=>{
+    ele1Height = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
+    ele2Height = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
+    ele3Height = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
+    ele4Height = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+
+    ele2offset = ele1Height + 200;
+    ele3offset = 300 + ele1Height + ele2Height;
+    ele4offset = 400 + ele1Height + ele2Height + ele3Height,
+
+    initTop()
+})
 
 menuButton.addEventListener('click', ()=>{
     sections.forEach(section=>{
@@ -99,23 +130,14 @@ sections.forEach(section => {
                 if(e.target == sections[1]) window.scrollTo({ top: ele2offset});
                 if(e.target == sections[2]) window.scrollTo({ top: ele3offset});
                 if(e.target == sections[3]) window.scrollTo({ top: ele4offset});
+                sectionFix()
             }, 350)
             menuOff()
         }
     })
 })
 
-window.addEventListener('scroll', (e)=>{
-    window.scrollY > 200 ? navTitle.classList.remove('hidden') : navTitle.classList.add('hidden') ;
-    //section 1
-    (window.scrollY >= ele1Height - window.innerHeight + 50) ? addFix(sections[0], ele1Height) : removeFix(sections[0], 50);
-    //section 2
-    (window.scrollY >= ele3offset - window.innerHeight - 100) ? addFix(sections[1], ele2Height) : removeFix(sections[1], ele2offset);
-    //section 3
-    (window.scrollY >= ele4offset - window.innerHeight - 100) ? addFix(sections[2], ele3Height) : removeFix(sections[2], ele3offset);
-
-    menuOff()
-})
+window.addEventListener('scroll', debounce(sectionFix))
 
 cards.forEach(c => 
   c.addEventListener('click', () =>{ 

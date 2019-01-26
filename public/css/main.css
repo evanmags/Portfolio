@@ -133,7 +133,7 @@ p {
   position: absolute;
   top:0;
   width: calc(100vw - 0px);
-  min-height: 100vh !important;
+  min-height: calc(100vh - 50px) !important;
   flex-shrink: 0 !important;
   margin-left: 0px;
   padding: 30px 50px 50px 50px;
@@ -710,7 +710,7 @@ p {
   width: 1px;
   height: 1px;
   margin: 0;
-  opacity: 0;
+  opacity: .1;
 }
 
 /* responsive things */

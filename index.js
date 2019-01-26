@@ -1,10 +1,19 @@
-const   express     =     require('express'), 
-        app         =     express();
-
-const   indexRoutes =     require('./routes/index');
+const   express     =     require('express'),
+        nodemailer  =     require("nodemailer"),
+        bodyParser  =     require('body-parser'),  
+        app         =     express(),
+        indexRoutes =     require('./routes/index'),
+        transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: process.env.GMAILUSER,
+              pass: process.env.GMAILPASS
+            }
+          });
 
 app.set('view engine', 'ejs');
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.use('/', indexRoutes);
 
