@@ -27,8 +27,7 @@ router.post('/mail', function(req, res){
         subject: "New message from portfolio", // Subject line
         text: `${req.body.email.body}, Contact ${req.body.email.Fname}: ${req.body.email.phone}, ${req.body.email.business}. `, // plain text body
       };
-    let info = transporter.sendMail(mailOptions)
-    console.log("Message sent: %s", info.messageId);
+    transporter.sendMail(mailOptions)
     res.redirect('back');
 })
 

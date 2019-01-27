@@ -227,21 +227,49 @@ p {
 }
 
 .ccTitle {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   margin-bottom: 15px;
 }
 
-#section3 h5 {
+.titleBar{
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-#section3 h6 {
-  font-weight: 200;
+.titleBar img{
+  justify-self: flex-start; 
+  max-height: 40px;
+  margin-right: 10px;
+  max-width: 20%;
+}
+
+.titleBarContent{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1 1 80%;
+  align-items: stretch;
+  border-bottom: 2px solid #e0e0e0;;
+}
+
+
+#section3 h5 {
+  font-size: 14px;
+  line-height: 1;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap
+}
+
+#section3 h6 {
+  font-weight: 200;
+  font-size: 12px;
+  line-height: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -608,7 +636,7 @@ p {
 .formItem textarea {
   width: 100%;
   border: 2px solid var(--white);
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 5px;
   height: 35px;
   font-size: 0.75rem;
@@ -617,7 +645,7 @@ p {
 }
 
 .formItem textarea {
-  min-height: 50px;
+  min-height: 100px;
 }
 
 .formItem input:focus,
