@@ -275,6 +275,7 @@ p {
 
 #section3 ul {
   display: flex;
+  margin-left: 50px;
   font-size: 0.85rem;
   width: 100%;
   margin-top: 10px;
@@ -360,7 +361,6 @@ p {
   width: 90%;
   max-width: 1300px;
   margin: 0px auto;
-  overflow: scroll;
   display: flex;
   flex-wrap: wrap;  
   justify-content: center;
@@ -783,6 +783,7 @@ p {
   }
 
   .skills{
+    width: 100%;
     margin-right: 0px;
   }
   .goals{
