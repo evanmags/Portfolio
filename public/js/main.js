@@ -1,6 +1,6 @@
 const   body        = document.querySelector('body'),
         hidden      = document.querySelectorAll('.hidden'),
-        sections    = document.querySelectorAll('.section'),
+        sections    = document.querySelectorAll('section'),
         navTitle    = document.querySelector('.navTitle'),
         animation   = document.querySelector('.animation'),
         content     = Array.from(document.querySelectorAll('.content')),
@@ -12,10 +12,10 @@ const   body        = document.querySelector('body'),
 
 let ele1Height = parseInt(window.getComputedStyle(sections[0]).getPropertyValue('height')),
     ele2Height = parseInt(window.getComputedStyle(sections[1]).getPropertyValue('height')),
-    ele2offset = ele1Height + 200;
     ele3Height = parseInt(window.getComputedStyle(sections[2]).getPropertyValue('height')),
-    ele3offset = 300 + ele1Height + ele2Height;
     ele4Height = parseInt(window.getComputedStyle(sections[3]).getPropertyValue('height'));
+    ele2offset = ele1Height + 200;
+    ele3offset = 300 + ele1Height + ele2Height;
     ele4offset = 400 + ele1Height + ele2Height + ele3Height,
     menu = false;
 
@@ -42,11 +42,9 @@ function debounce(func, wait = 10, immediate = true) {
 
 
 function menuOff(){
-    section2.style.setProperty('transform', `translateY(0px) rotateX(0deg) `);
-    section3.style.setProperty('transform', `translateY(0px) rotateX(0deg)`);
-    section4.style.setProperty('transform', `translateY(0px) rotateX(0deg)`);
     sections.forEach(section => {
         section.classList.remove('menu')
+        section.style.setProperty('transform', `translateY(0px)`);
     })
     menu = false;
 }
@@ -115,9 +113,9 @@ menuButton.addEventListener('click', ()=>{
         return menuOff()
     }
 
-    section2.style.setProperty('transform', `translateY(${-(ele2offset - window.scrollY - (window.innerHeight * .25)).clamp(-(window.innerHeight * .25)+50, ele2offset)}px)`),
-    section3.style.setProperty('transform', `translateY(${-(ele3offset - window.scrollY - (window.innerHeight * .5)).clamp(-(window.innerHeight * .5)+50, ele3offset)}px)`),
-    section4.style.setProperty('transform', `translateY(${-(ele4offset - window.scrollY - (window.innerHeight * .75)).clamp(-(window.innerHeight * .75)+50, ele4offset)}px)`);
+    sections[1].style.setProperty('transform', `translateY(${-(ele2offset - window.scrollY - (window.innerHeight * .25)).clamp(-(window.innerHeight * .25)+50, ele2offset)}px)`),
+    sections[2].style.setProperty('transform', `translateY(${-(ele3offset - window.scrollY - (window.innerHeight * .5)).clamp(-(window.innerHeight * .5)+50, ele3offset)}px)`),
+    sections[3].style.setProperty('transform', `translateY(${-(ele4offset - window.scrollY - (window.innerHeight * .75)).clamp(-(window.innerHeight * .75)+50, ele4offset)}px)`);
     
     return menu = !menu;
 })
